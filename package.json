@@ -7,7 +7,7 @@
     "Remoting",
     "REST"
   ],
-  "version": "2.21.3-http-coercion",
+  "version": "2.21.6-http-coercion",
   "scripts": {
     "pretest": "grunt jscs jshint",
     "test": "mocha"
