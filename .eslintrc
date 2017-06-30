@@ -1,9 +1,10 @@
 {
+  "extends": "eslint:recommended",
   "rules": {
-    "strict": 0,
-    "quotes": ["single"],
-    "curly": "multi-line",
-    "no-use-before-define": "nofunc",
+    "strict": 1,
+    "quotes": [1, "single"],
+    "curly": [1, "multi-line"],
+    "no-use-before-define": [1, "nofunc"],
     "no-underscore-dangle": 0,
     "no-unused-vars": [2, {"vars": "local", "args": "none"}],
     "new-cap": 0,

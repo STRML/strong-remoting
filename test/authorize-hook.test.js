@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 var express = require('express');
 var RemoteObjects = require('../');
 var User = require('./e2e/fixtures/user');
+var bodyParser = require('body-parser');
 var fmt = require('util').format;
 var User = require('./e2e/fixtures/user');
 
@@ -11,6 +12,8 @@ describe('authorization hook', function() {
 
   before(function setupServer(done) {
     var app = express();
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded());
     remotes = RemoteObjects.create();
     remotes.exports.User = User;
     app.use(remotes.handler('rest'));

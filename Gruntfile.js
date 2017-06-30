@@ -22,25 +22,6 @@ module.exports = function(grunt) {
         }
       }
     },
-    jshint: {
-      options: {
-        jshintrc: true
-      },
-      gruntfile: {
-        src: 'Gruntfile.js'
-      },
-      lib: {
-        src: ['lib/**/*.js']
-      },
-      test: {
-        src: ['test/**/*.js']
-      }
-    },
-    jscs: {
-      gruntfile: 'Gruntfile.js',
-      lib: '<%= jshint.lib.src %>',
-      test: '<%= jshint.test.src %>'
-    },
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -158,8 +139,6 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-jscs');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-karma');
 

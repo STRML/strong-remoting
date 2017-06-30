@@ -5,6 +5,7 @@ var RemoteObjects = require('../');
 var express = require('express');
 var request = require('supertest');
 var expect = require('chai').expect;
+var bodyParser = require('body-parser');
 var factory = require('./helpers/shared-objects-factory.js');
 var Promise = global.Promise || require('bluebird');
 
@@ -23,6 +24,8 @@ describe('strong-remoting-rest', function() {
   before(function(done) {
     app = express();
     app.disable('x-powered-by');
+    app.use(bodyParser.json({limit: '1kb', strict: false}));
+    app.use(bodyParser.urlencoded({extended: true}));
     app.use(function(req, res, next) {
       // create the handler for each request
       objects.handler(adapterName).apply(objects, arguments);
@@ -34,6 +37,7 @@ describe('strong-remoting-rest', function() {
 
   before(function(done) {
     appSupportingJsonOnly = express();
+    appSupportingJsonOnly.use(bodyParser.json({limit: '1kb', strict: false}));
     appSupportingJsonOnly.use(function(req, res, next) {
       // create the handler for each request
       var supportedTypes = ['json', 'application/javascript', 'text/javascript'];
@@ -48,8 +52,9 @@ describe('strong-remoting-rest', function() {
     if (process.env.NODE_ENV === 'production') {
       process.env.NODE_ENV = 'test';
     }
-    objects = RemoteObjects.create({json: {limit: '1kb'},
-      errorHandler: {disableStackTrace: false}});
+    objects = RemoteObjects.create({
+      errorHandler: {disableStackTrace: false}
+    });
     remotes = objects.exports;
 
     // connect to the app
@@ -1850,7 +1855,7 @@ describe('strong-remoting-rest', function() {
   });
 
   describe('status codes', function() {
-    describe('using a custom satus code', function() {
+    describe('using a custom status code', function() {
       it('returns a custom status code', function(done) {
         var method = givenSharedStaticMethod(
           function fn(cb) {

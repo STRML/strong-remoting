@@ -3,6 +3,7 @@ var crypto = require('crypto');
 var expect = require('chai').expect;
 var express = require('express');
 var fmt = require('util').format;
+var bodyParser = require('body-parser');
 
 var RemoteObjects = require('../');
 var User = require('./e2e/fixtures/user');
@@ -20,6 +21,8 @@ describe('support for HTTP Authentication', function() {
     var digest = auth.digest({ realm: 'testing' }, function(user, cb) {
       cb(user === 'digestuser' ? md5('digestuser:testing:digestpass') : null);
     });
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded());
     app.use('/noAuth', remotes.handler('rest'));
     app.use('/basicAuth', auth.connect(basic), remotes.handler('rest'));
     app.use('/digestAuth', auth.connect(digest), remotes.handler('rest'));

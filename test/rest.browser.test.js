@@ -4,6 +4,7 @@ var inherits = require('util').inherits;
 var RemoteObjects = require('../');
 var express = require('express');
 var request = require('supertest');
+var bodyParser = require('body-parser');
 var expect = require('chai').expect;
 var factory = require('./helpers/shared-objects-factory.js');
 
@@ -16,6 +17,7 @@ describe('strong-remoting-rest', function() {
 
   before(function(done) {
     app = express();
+    app.use(bodyParser.json());
     app.use(function(req, res, next) {
       // create the handler for each request
       objects.handler(adapterName).apply(objects, arguments);

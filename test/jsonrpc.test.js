@@ -2,6 +2,7 @@ var assert = require('assert');
 var RemoteObjects = require('../');
 var express = require('express');
 var request = require('supertest');
+var bodyParser = require('body-parser');
 var SharedClass = require('../lib/shared-class');
 
 describe('strong-remoting-jsonrpc', function() {
@@ -13,22 +14,24 @@ describe('strong-remoting-jsonrpc', function() {
   // setup
   beforeEach(function() {
     if (server) server.close();
-    objects = RemoteObjects.create({json: {limit: '1kb'}});
+    objects = RemoteObjects.create();
     remotes = objects.exports;
     app = express();
+    app.use(bodyParser.json({limit: '1kb'}));
   });
 
-  function jsonrpc(url, method, parameters) {
+  function jsonrpc(url, method, parameters, expectJSON) {
     return request(app).post(url)
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({'jsonrpc': '2.0', 'method': method, 'params': parameters, 'id': 1})
-      .expect('Content-Type', /json/);
+      .expect('Content-Type', expectJSON !== false ? /json/ : /text/);
   }
 
   describe('handlers', function() {
     describe('jsonrpc', function() {
       beforeEach(function() {
+
         app.use(function(req, res, next) {
           // create the handler for each request
           objects.handler('jsonrpc').apply(objects, arguments);
@@ -111,7 +114,7 @@ describe('strong-remoting-jsonrpc', function() {
           name += '11111111111';
         }
 
-        jsonrpc('/user/jsonrpc', 'greet', [name])
+        jsonrpc('/user/jsonrpc', 'greet', [name], false)
           .expect(413, done);
       });
     });
