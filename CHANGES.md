@@ -1,3 +1,26 @@
+2017-06-30, Version 2.21.77
+==========================
+
+* Remove body-parser from runtime
+* Backport `_format` crash fix
+* Backport disabling remote methods
+* Backport content-type fixes
+* Pkg updates
+
+2016-06-28, Version 2.21.72
+==========================
+
+* Pkg updates
+
+
+2016-04-25, Version 2.21.71
+==========================
+
+* Restore rebased-out coercion fixes
+* Remove CORS
+* Add Eslint
+* `'null'` coercion fix
+
 2015-09-18, Version 2.21.0
 ==========================
 
