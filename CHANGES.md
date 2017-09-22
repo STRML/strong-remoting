@@ -1,3 +1,9 @@
+2017-09-21, Version 2.21.78
+===========================
+
+* Fix `application/json` matcher for sloppy coercion.
+  * Previously, `application/json; charset=utf-8` would *not* match and create some unexpected results.
+
 2017-06-30, Version 2.21.77
 ==========================
 
@@ -8,13 +14,13 @@
 * Pkg updates
 
 2016-06-28, Version 2.21.72
-==========================
+===========================
 
 * Pkg updates
 
 
 2016-04-25, Version 2.21.71
-==========================
+===========================
 
 * Restore rebased-out coercion fixes
 * Remove CORS
